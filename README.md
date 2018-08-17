@@ -6,7 +6,7 @@ This repository consists of network automation workflows including but not limit
 
 ## Getting involved
 
-* If you'd like to contribute to an existing lab, refer to [contributing.md](contributing.md).
+* If you'd like to contribute to an existing lab, refer to [CONTRIBUTING.md](CONTRIBUTING.md).
 
 # Additional Resources
 * [Getting started with programmability on Cisco IOS-XE with DEVNET](https://developer.cisco.com/site/ios-xe/)
