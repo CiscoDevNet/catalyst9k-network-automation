@@ -1,4 +1,4 @@
-#### avb 
+#### AVB 
 Python scripts related to Audio Video Briding (IEEE 802.1BA) support on Catalyst Platforms.
 For details, refer to: http://www.cisco.com/go/avb   
 
