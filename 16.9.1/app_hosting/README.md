@@ -1,18 +1,17 @@
-#### Application Hosting 
+# Application Hosting 
 Python scripts related to Application Hosting support on Catalyst 9K 
 
 
 Platforms.
 
-#### apphostingresource.py
+# apphostingresource.py
 Script automating the CPU and Memory allocation changes for particular application.
 
-#### Usage
+# Usage
 ```
-python apphostingresource.py --host <path/to/inventory/xl> -u <username -p <password> -a <application_name> -m <memory allocation> -c <cpu allocation>
+python apphostingresource.py --host <ip address> -u <username> -p <password> -a <application_name> -m <memory_allocation> -c <cpu_allocation>
 
 ```
-<path/to/inventory/xl> : Path to local XL file with network inventory details
 <username> : Username for switch login (common for all switches)
 <password> : Password for switch login (common for all switches)
 <application_name> : Name of the application 
@@ -20,7 +19,7 @@ python apphostingresource.py --host <path/to/inventory/xl> -u <username -p <pass
 <cpu allocation> : CPU resource in CPU units (0-7400)
 
 
-#### Examples 
+# Examples 
 To change CPU and Memory of the application.
 ```
 python apphostingresource.py --host 128.26.20.246 -u cisco -p cisco -a iperf -m 20 -c 600
