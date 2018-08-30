@@ -10,7 +10,6 @@ Script automating the CPU and Memory allocation changes for particular applicati
 # Usage
 ```
 python apphostingresource.py --host <ip address> -u <username> -p <password> -a <application_name> -m <memory_allocation> -c <cpu_allocation>
-
 ```
 
 <username> : Username for switch login (common for all switches)
