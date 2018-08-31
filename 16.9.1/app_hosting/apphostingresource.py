@@ -96,14 +96,11 @@ def verify_app_status(netconf_connection, appplication_name, status="deployed"):
     for element in data.findall('{http://cisco.com/ns/yang/Cisco-IOS-XE-virtual-service-oper}virtual-services'):
       for service in element.findall('{http://cisco.com/ns/yang/Cisco-IOS-XE-virtual-service-oper}virtual-service'):
         app_name = service.find('{http://cisco.com/ns/yang/Cisco-IOS-XE-virtual-service-oper}name').text
-        print("THIS IS MY APP %s" %app_name)
         for detail in service.findall('{http://cisco.com/ns/yang/Cisco-IOS-XE-virtual-service-oper}details'):
           app_status = detail.find('{http://cisco.com/ns/yang/Cisco-IOS-XE-virtual-service-oper}state').text
-          if app_status.upper() == status.upper():
-            print("Status of application %s is %s as expected" %(app_name, app_status))
+          if app_status.upper() == status.upper()
             return_val = True
           else:
-            print("Status of application %s is not as expected. Expected %s, Actual %s" %(app_name, status, app_status))
             return_val = False
 
   return return_val
