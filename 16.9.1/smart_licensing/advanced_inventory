@@ -1,0 +1,15 @@
+[all:vars]
+ansible_connection = local
+ansible_python_interpreter=python
+
+[switches:children]
+c9k
+c2k
+
+[c9k]
+17x.2x.2xx.31
+17x.2x.2xx.32
+[c2k]
+17x.2x.2xx.51
+
+
