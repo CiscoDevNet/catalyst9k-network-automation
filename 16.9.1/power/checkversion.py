@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2018  Jay Sharma <jayshar@cisco.com>
+# Copyright (c) 2018, Cisco and/or its affiliates
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
