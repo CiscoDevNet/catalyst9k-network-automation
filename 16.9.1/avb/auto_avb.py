@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #
-# Copyright (c) 2018  Siddharth Krishna <sidkrish@cisco.com>
+# Copyright (c) 2018, Cisco and/or its affiliates
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
