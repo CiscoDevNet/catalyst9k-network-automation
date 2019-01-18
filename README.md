@@ -4,7 +4,7 @@
 
 This repository consists of network automation workflows including but not limited to use of Python scripts for leveraging feature set of Catalyst 9000 series switches.  The collection of code includes samples for Network Management that leverages on-box libraries, as well as exposed external APIs (NETCONF/RESTCONF) to perform well defined use cases in real work campus networks.
 
-The repository is aligned with Cisco IOS XE releases and there would be a corresponding repository for each major release which would contain scripts that leverages features introduced to solve real-world problems.
+The repository is aligned with Cisco IOS XE releases and there would be a corresponding repository for each major release which would contain scripts that leverages features introduced in Cat9k platforms to solve real-world problems.
 
 ## Getting involved
 
