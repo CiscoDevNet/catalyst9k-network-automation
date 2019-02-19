@@ -19,7 +19,7 @@ python ETA-Netflow.py --host <ip_address> -u <username> -p <password> --recordna
 <NetFlow_Monitor> : The name of the NetFlow monitor (default = fnf-eta-mon)
 
 
-Sameple Run:
+### Sameple Run:
 cisco@U-Srv-18:~/klei$ python ETA-Netflow.py --host 172.26.202.89 --exporterip 172.26.202.123
 <?xml version="1.0" ?>
 <rpc-reply message-id="urn:uuid:856e5445-2d80-4031-92db-a7bf58705591" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
