@@ -1,4 +1,4 @@
-#### NetFlow Configuration for ETA
+# NetFlow Configuration for ETA
 Python scripts for Netflow Configuration to support ETA on Catalyst 9000 switches
 
 ### ETA-Netflow.py
