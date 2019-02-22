@@ -1,0 +1,76 @@
+# Copyright (c) 2018, Cisco and/or its affiliates
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
+# This ansible playbook verfies if base requirements for SL is met, then configures and verfies the SL registration status
+
+# usage: ansible-playbook svl.yaml -vvv -u xxxxx -k -i advanced_inventory -v --extra-vars="domain=10 intf1=2/0/1 intf2=2/0/2 dadintf=2/0/3"
+
+- name: Configure SVL on Catalyst 9000 Series switches
+  hosts: c9k
+  gather_facts: no 
+
+  tasks:
+    - name: configure SVL per switch using netconf
+      netconf_config:
+        content: |
+             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+               <stackwise-virtual>
+                <domain xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-stackwise-virtual">
+                 <domain>{{ domain }}</domain>
+                </domain>
+               </stackwise-virtual>
+               <interface>
+                <TenGigabitEthernet>
+                 <name>{{ intf1 }}</name>
+                 <stackwise-virtual>
+                  <link>1</link>
+                 </stackwise-virtual>
+                </TenGigabitEthernet>
+               </interface>
+               <interface>
+                <TenGigabitEthernet>
+                 <name>{{ intf2 }}</name>
+                 <stackwise-virtual>
+                  <link>1</link>
+                 </stackwise-virtual>
+                </TenGigabitEthernet>
+               </interface>
+               <interface>
+                <TenGigabitEthernet>
+                 <name>{{ dadintf }}</name>
+                 <stackwise-virtual>
+                  <dual-active-detection xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="merge"/>
+                 </stackwise-virtual>
+                </TenGigabitEthernet>
+               </interface>
+              </native>
+             </config>
+
+    - name: reload device
+      ios_command:
+        commands:
+          - wr mem
+          - command: 'reload'
+            prompt: '[confirm]'
+            answer: "\r"
