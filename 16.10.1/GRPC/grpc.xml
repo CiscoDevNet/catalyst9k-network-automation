@@ -1,0 +1,20 @@
+<config>
+  <mdt-config-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mdt-cfg">
+    <mdt-subscription>
+      <subscription-id>203</subscription-id>
+      <base>
+        <stream>yang-push</stream>
+        <encoding>encode-kvgpb</encoding>
+        <source-vrf>Mgmt-vrf</source-vrf>
+        <source-address>10.60.0.19</source-address>
+        <period>2000</period>
+        <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-seconds</xpath>
+      </base>
+      <mdt-receivers>
+        <address>5.22.23.48</address>
+        <port>57500</port>
+        <protocol>grpc-tcp</protocol>
+      </mdt-receivers>
+    </mdt-subscription>
+  </mdt-config-data>
+</config>

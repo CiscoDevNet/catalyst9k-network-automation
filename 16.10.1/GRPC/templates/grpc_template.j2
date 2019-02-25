@@ -1,0 +1,20 @@
+<config>
+  <mdt-config-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mdt-cfg">
+    <mdt-subscription>
+      <subscription-id>{{ grpc_subid }}</subscription-id>
+      <base>
+        <stream>yang-push</stream>
+        <encoding>encode-kvgpb</encoding>
+        <period>{{ grpc_period }}</period>
+        <xpath>{{ grpc_xpath }}</xpath>
+        {% if grpc_srcvrf is not none %}<source-vrf>{{ grpc_srcvrf }}</source-vrf>{% endif %}
+        {% if grpc_srcaddr is not none %}<source-address>{{ grpc_srcaddr }}</source-address>{% endif %}
+      </base>
+      <mdt-receivers>
+        <address>{{ grpc_dstaddr }}</address>
+        <port>{{ grpc_dstport }}</port>
+        <protocol>grpc-tcp</protocol>
+      </mdt-receivers>
+    </mdt-subscription>
+  </mdt-config-data>
+</config>
