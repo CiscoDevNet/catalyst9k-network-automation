@@ -6,5 +6,6 @@ ansible_python_interpreter=python
 c9k
 
 [c9k]
-172.26.202.97
-172.26.202.99
+xxx.xxx.xxx.xxx
+xxx.xxx.xxx.xxx
+
