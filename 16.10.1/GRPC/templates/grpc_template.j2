@@ -5,7 +5,11 @@
       <base>
         <stream>yang-push</stream>
         <encoding>encode-kvgpb</encoding>
+        {% if grpc_trigger_type == 'onchange' %}
+        <no-synch-on-start>false</no-synch-on-start>
+        {% elif grpc_trigger_type == 'periodic' %}
         <period>{{ grpc_period }}</period>
+        {% endif %}
         <xpath>{{ grpc_xpath }}</xpath>
         {% if grpc_srcvrf is not none %}<source-vrf>{{ grpc_srcvrf }}</source-vrf>{% endif %}
         {% if grpc_srcaddr is not none %}<source-address>{{ grpc_srcaddr }}</source-address>{% endif %}

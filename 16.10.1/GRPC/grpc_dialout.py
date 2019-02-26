@@ -2,9 +2,9 @@
 #
 # Copyright (c) 2018, Cisco and/or its affiliates
 # All rights reserved.
-#__maintainer__ = 'Kenny Lei'
-#__email__ = 'klei@cisco.com'
-#__date__ = 'January 2019'
+#__maintainer__ = 'Siddharth Krishna'
+#__email__ = 'sidkrish@cisco.com'
+#__date__ = 'February 2019'
 #__version__ = 1.0
 #
 # Redistribution and use in source and binary forms, with or without
@@ -28,11 +28,8 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# This script enable Netflow configuration for Encrypted Traffic Analytics Catalyst 9K.
-# Limitations:
-#  1. The script use the predefine names for NetFlow record (fnf-eta-rec), exporter (fnf-eta-exp) 
-#     and monitor (fnf-eta-mon) unless they are specified from the CLI
-#  2. Refer to the ETA Cisco Validated Design on cisco.com for eanble ETA on interfaces for differnet deployments
+# This script automates streaming telemetry grpc (dial-out) based subscription on the Catalyst 9K.
+# It uses Jinja Templates for dynamic redering of XML payloads to netconf requests. 
 
 
 
@@ -47,7 +44,7 @@ from xml.etree.ElementTree import XML
 from jinja2 import Environment , FileSystemLoader
 
 
-def configure_grpc_subscription(netconf_handler, proc_subid, proc_period, proc_xpath, proc_dstaddr, proc_dstport, proc_srcvrf):
+def configure_grpc_subscription(netconf_handler, proc_subid, proc_triggertype, proc_period, proc_xpath, proc_dstaddr, proc_dstport, proc_srcaddr, proc_srcvrf):
 
   file_loader = FileSystemLoader('templates')
 
@@ -55,9 +52,7 @@ def configure_grpc_subscription(netconf_handler, proc_subid, proc_period, proc_x
 
   template = env.get_template('grpc_template.j2')
   
-  flow_record_payload = template.render(grpc_subid=proc_subid, grpc_period=proc_period, grpc_xpath=proc_xpath, grpc_dstaddr=proc_dstaddr, grpc_dstport=proc_dstport, grpc_srcvrf=proc_srcvrf)
-
-  print(flow_record_payload)
+  flow_record_payload = template.render(grpc_subid=proc_subid, grpc_trigger_type= proc_triggertype, grpc_period=proc_period, grpc_xpath=proc_xpath, grpc_dstaddr=proc_dstaddr, grpc_dstport=proc_dstport, grpc_srcaddr=proc_srcaddr, grpc_srcvrf=proc_srcvrf)
 
   netconf_reply = xml.dom.minidom.parseString(str(netconf_handler.edit_config(flow_record_payload, target='running')))
   print (netconf_reply.toprettyxml( indent = "  " ))
@@ -82,20 +77,27 @@ if __name__ == '__main__':
                         help="Specify this if you want a non-default port")
     parser.add_argument('--subscription_id', type=str, required=True,
                         help="Specify the id for gRPC subscription")
-    parser.add_argument('--period', type=str, required=True,
-                        help="Specify the period for gRPC subscription")
+    parser.add_argument('--trigger_type', type=str, required=True,
+                        help="Specify the trigger type for gRPC subscription - must be either 'onchange' or 'periodic'")
+    parser.add_argument('--period', type=str,
+                        help="Specify the period for gRPC subscription - must for trigger type 'periodic'")
     parser.add_argument('--dst_ipaddr', type=str, required=True,
                         help="Specify the destinaton address for gRPC subscription")
     parser.add_argument('--dst_port', type=str, required=True,
                         help="Specify the destination port for gRPC subscription")
     parser.add_argument('--xpath', type=str, required=True,
                         help="Specify the XPATH for gRPC subscription")
+    parser.add_argument('--src_ipaddr', type=str,
+                        help="Optional,Specify the switch source address for gRPC subscription")
     parser.add_argument('--src_vrf', type=str,
-                        help="Specify the XPATH for gRPC subscription")
+                        help="Optional, Specify the switch source VRF for gRPC subscription")
     args = parser.parse_args()
+  
+    if args.trigger_type != 'periodic' and args.trigger_type != 'onchange':
+        parser.error("--trigger_type must be either 'onchnage' or 'periodic'")
 
-#    if args.trigger_type  and args.lport is None and args.rport is None:
-#        parser.error("--prox requires --lport and --rport.")
+    if args.trigger_type == 'periodic' and args.period is None:
+        parser.error("'--trigger_type periodic needs a valid period value'")
 
 
     m =  manager.connect(host=args.host,
@@ -106,18 +108,8 @@ if __name__ == '__main__':
 
 
     
-    #Step 1. Verify if switch has at least 16.9.1 image running on the box
-    #if checkversion.verify_sw_version(m, min_major_release=16, min_minor_release=9, min_version=1):
-    #  print("Switch Image meets the required criteria. proceeding with the configuration")
-    #else:
-    #  print("Switch not ready to configure the feature! Exiting the script")
-    #  exit()
-
-    #Step 2: Configure FlowRecord
-    if configure_grpc_subscription(m, args.subscription_id, args.period, args.xpath, args.dst_ipaddr, args.dst_port, args.src_vrf):
+    if configure_grpc_subscription(m, args.subscription_id, args.trigger_type, args.period, args.xpath, args.dst_ipaddr, args.dst_port, args.src_ipaddr, args.src_vrf):
       print("HURRAAY!! Telemetry subscription has beeen configured.")
     else:
       print("AAARGHH!! Something wrong with configuring the telemetry subscription.")
       exit()
-
-    #
