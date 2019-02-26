@@ -262,7 +262,7 @@ if __name__ == '__main__':
                          device_params={'name': 'iosxe'})
 
     if define_vrf(m, args.vrf_name, args.rd_val, args.rt_exp, args.rt_imp):
-        print ("vrf  has been configured") % args.vrf_name
+        print ("vrf  has been configured")
     if interface_config(m, args.int_name, args.int_num, args.vrf_name, args.ip_add, args.sub_mask):
         print("Interface has been configured for the vrf")
     if vrf_redistribute(m, args.local_as, args.vrf_name, args.red_met):

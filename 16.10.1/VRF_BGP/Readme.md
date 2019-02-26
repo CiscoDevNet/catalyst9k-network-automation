@@ -25,7 +25,7 @@ Script pushes the vrf and vpnv4  related config to the device.
 * source_lo_num = local source loopback number for BGP.
 
 # Sample Run
-➜ python3 vrf_config_2.py --host 172.26.193.173 -u cisco -p cisco --vrf_name test6 --rd_val 6:6 --rt_exp 6:6 --rt_imp 6:6 --int_name TenGigabitEthernet --int_num 1/1/5  --ip_add 11.11.11.1 --sub_mask 255.255.255.0 --local_as 100 --red_met 10 --vpn_nei 172.168.1.80 --remote_as 100 --source_lo_num 0
+➜ python3 define_vrf_enable_bgp.py --host 172.26.193.173 -u cisco -p cisco --vrf_name test6 --rd_val 6:6 --rt_exp 6:6 --rt_imp 6:6 --int_name TenGigabitEthernet --int_num 1/1/5  --ip_add 11.11.11.1 --sub_mask 255.255.255.0 --local_as 100 --red_met 10 --vpn_nei 172.168.1.80 --remote_as 100 --source_lo_num 0
 
 vrf has been configured
 Interface has been configured
