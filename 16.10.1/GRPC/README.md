@@ -11,6 +11,7 @@ It uses Jinja Templates for dynamic redering of XML payloads to netconf requests
 python grpc_dialout.py --host <host_ip> -u <username> -p <password> --subscription_id <sub_id> --trigger_type <trigger_type> --period <centiseconds> --dst_ipaddr <dst_ip> --dst_port <dst_port> --xpath <xpath> 
 '''
 
+```
 <host_ip> :	The IP address of the Catalyst 9000 switch\n
 <username>:	Username for switch login (default = cisco)
 <passowrd>:	Password for switch logoin (default = cisco)
@@ -22,10 +23,10 @@ python grpc_dialout.py --host <host_ip> -u <username> -p <password> --subscripti
 <xpath>   :	XPATH for the switch resource for the telemetry subscription
 <src_ip>  :	Switch source IP address for the telemetry subscription - optional
 <src_port>:	Switch source VRF for the telemetry subscription - optional
-
+```
 
 ### Sample Run:
-
+```
 XXXXXXXXXXX$ python grpc_dialout.py -h
 usage: grpc_dialout.py [-h] --host HOST [-u USERNAME] [-p PASSWORD]
                        [--port PORT] --subscription_id SUBSCRIPTION_ID
@@ -59,8 +60,8 @@ optional arguments:
                         subscription
   --src_vrf SRC_VRF     Optional, Specify the switch source VRF for gRPC
                         subscription
-
-
+```
+```
 python grpc_dialout.py --host x.x.x.x -u xxxx -p xxxx --subscription_id 700 --trigger_type onchange  --dst_ipaddr x.x.x.x --dst_port xxxx --xpath /cdp-ios-xe-oper:cdp-neighbor-details/cdp-neighbor-detail --src_ipaddr x.x.x.x --src_vrf Mgmt-vrf
 <?xml version="1.0" ?>
 <rpc-reply message-id="urn:uuid:25beb81c-ce7c-4024-ab95-b6ab6e586ba0" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -77,3 +78,4 @@ python grpc_dialout.py --host x.x.x.x -u xxxx -p xxxx --subscription_id 800 --tr
 </rpc-reply>
 
 HURRAAY!! Telemetry subscription has beeen configured.
+```
