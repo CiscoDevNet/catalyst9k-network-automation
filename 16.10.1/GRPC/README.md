@@ -3,7 +3,7 @@ Automation of streaming telemetry grpc (dial-out) based subscriptions on the Cat
 
 ### grpc-dialout.py
 This python script automates streaming telemetry grpc (dial-out) based subscription on the Catalyst 9K.
-It uses Jinja Templates for dynamic redering of XML payloads to netconf requests. The XML payload is kept independently inside /templates directory. 
+It uses Jinja Templates for dynamic redering of XML payloads to netconf requests. The XML payload is kept independently inside "/templates" directory. 
 
 
 ### Usage
@@ -11,7 +11,7 @@ It uses Jinja Templates for dynamic redering of XML payloads to netconf requests
 python grpc_dialout.py --host <host_ip> -u <username> -p <password> --subscription_id <sub_id> --trigger_type <trigger_type> --period <centiseconds> --dst_ipaddr <dst_ip> --dst_port <dst_port> --xpath <xpath> 
 '''
 
-<host_ip> :	The IP address of the Catalyst 9000 switch
+<host_ip> :	The IP address of the Catalyst 9000 switch\n
 <username>:	Username for switch login (default = cisco)
 <passowrd>:	Password for switch logoin (default = cisco)
 <sub_id>  :	Subscirption ID (numeric) for the telemetry session 
