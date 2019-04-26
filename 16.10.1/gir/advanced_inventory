@@ -1,0 +1,10 @@
+[all:vars]
+ansible_connection = local
+ansible_python_interpreter=python
+
+[switches:children]
+c9k
+
+[c9k]
+172.26.200.117
+
