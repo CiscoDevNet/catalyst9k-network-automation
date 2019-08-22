@@ -1,0 +1,1 @@
+readme for qos script
