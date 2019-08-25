@@ -1,6 +1,11 @@
 # Streaming telemetry sessions using GRPC Dial-Out
 Providing easy configuration and monitoring of streaming telemetry subscriptions on the Catalyst 9K.
 
+# requirements
+-- ncclient
+
+-- IOS-XE running >/= 16.11.1 also enabled for NETCONF
+
 ### Sample Run:
 ```
 (py) bash-4.1$ python mdtcfg.py --host x.x.x.x -u cisco -p C1sc0dna --sourceaddr x.x.x.x --subscriptiontype interface --reciever x.x.x.x
