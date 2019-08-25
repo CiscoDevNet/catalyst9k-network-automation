@@ -61,6 +61,7 @@ def configure_interfacenbar(netconf_handler, interface):
     </config>
     '''
     xmlDom = xml.dom.minidom.parseString(str(netconf_handler.edit_config(payload.format(interfacespeed=interfaceType[0][0], interfacename=interfaceType[0][1]), target='running')))
+    print(xmlDom.toprettyxml(indent = "  "))
     if "<ok/>" in (xmlDom.toprettyxml(indent = "  ")):
       return_val = True
     else:
@@ -84,7 +85,8 @@ def configure_nbarglobal(netconf_handler):
       </native>
     </config>
     '''
-    xmlDom = xml.dom.minidom.parseString(str(netconf_handler.edit_config(payload), target='running'))
+    xmlDom = xml.dom.minidom.parseString(str(netconf_handler.edit_config(payload, target='running')))
+    print(xmlDom.toprettyxml(indent = "  "))
     if "<ok/>" in (xmlDom.toprettyxml(indent = "  ")):
       return_val = True
     else:
@@ -113,13 +115,19 @@ if __name__ == '__main__':
                          password=args.password,
                          device_params={'name':"iosxe"})
 
+    print("Checking if switch is configured with advantage license")
     if not checklicense.check_existing_license(m, licensetype='advantage'):
         print("advantage license is mandatory for NBAR! Exiting")
         exit()
+    else:
+        print(" switch is configured with advantage license procedding with interface config")
     if not configure_interfacenbar(m, args.interface):
         print("Error in configuring NBAR on interface %s" %(args.interface))
         exit()
-    if not configure_nbarglobal(m)
+    else:
+        print(" interface config successful, enabling http SERVICES")
+    if not configure_nbarglobal(m):
         print("Error in configuring NBAR HTTP on switch")
         exit()
+    print("NBAR configured successfully")
 
